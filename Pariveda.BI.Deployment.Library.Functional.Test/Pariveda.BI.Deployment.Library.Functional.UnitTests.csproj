@@ -51,13 +51,13 @@
     <Compile Include="BISolutionsParserUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Pariveda.BI.Deployment.BIDeployable\Pariveda.BI.Deployment.Library.csproj">
+      <Project>{F2025C08-19A6-4E36-B64A-9AE29CB4B4A4}</Project>
+      <Name>Pariveda.BI.Deployment.Library</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pariveda.BI.Deployment.Functional\Pariveda.BI.Deployment.Library.Functional.fsproj">
       <Project>{32641446-4D74-450C-AFD2-751AA6FBB07A}</Project>
       <Name>Pariveda.BI.Deployment.Library.Functional</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pariveda.BI.Deployment.Library.Extensions\Pariveda.BI.Deployment.Library.Extensions.csproj">
-      <Project>{19355ED0-FB26-46AE-84C9-BC68845DB5E4}</Project>
-      <Name>Pariveda.BI.Deployment.Library.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

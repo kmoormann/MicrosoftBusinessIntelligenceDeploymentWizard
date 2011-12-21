@@ -10,6 +10,20 @@ namespace Pariveda.BI.Deployment.Library
 
     public class SSISItem : BusinessIntelligenceItem
     {
+        private string _path = string.Empty;
+        
+        public string Path
+        {
+            get
+            {
+                return _path;
+            }
+            set
+            {
+                _path = value;
+            }
+        }
+
         public SSISItem(string fileName)
             : base(fileName)
         {

@@ -41,31 +41,6 @@ namespace Pariveda.BI.DeploymentWizard
             
         }
 
-
-        private static List<BusinessIntelligenceItem> CreateBIItemsListingFromDirectory(DirectoryInfo directoryInfo, string extension)
-        {
-            List<BusinessIntelligenceItem> items = new List<BusinessIntelligenceItem>();
-            foreach (var directory in directoryInfo.GetDirectories())
-                items.AddRange(CreateBIItemsListingFromDirectory(directory, extension).AsEnumerable());
-            foreach (var file in directoryInfo.GetFiles())
-                if (extension.Equals(file.Extension, StringComparison.InvariantCultureIgnoreCase) && !items.Any(x => x.FileName.EndsWith(file.Name)))
-                {
-                    switch(extension)
-                    {
-                        case ".dtsx":
-                            items.Add(new SSISItem(file.FullName));
-                            break;
-                        case ".sql":
-                            items.Add(new SQLItem(file.FullName));
-                            break;
-                        default:
-                            break;
-                    }
-                    
-                }
-            return items;
-        }
-
         private void button1_Click_1(object sender, EventArgs e)
         {
             var selected = openFileDialog1.FileName;
@@ -83,16 +58,14 @@ namespace Pariveda.BI.DeploymentWizard
         {
             var biFiles = new FileInfo(slnFile).ParseBISolutionFile();
             InitializeSSISList(biFiles);
-            InitializeSQLLists(biFiles);
+            InitializeSQLLists(slnFile);
         }
 
-        private void InitializeSQLLists(IEnumerable<FileInfo> biFiles)
+        private void InitializeSQLLists(string slnFile)
         {
             SQLCommitItems.Clear();
-            foreach (var item in biFiles.Where(f => f.Extension.Equals(".sql")))
-            {
-                SQLCommitItems.Add(new SQLItem(item.FullName, true));
-            }
+            foreach (var item in (new FileInfo(slnFile)).GetSqlScripts())
+                SQLCommitItems.Add(item);
         }
 
         private void InitializeSSISList(IEnumerable<FileInfo> biFiles)
@@ -102,18 +75,6 @@ namespace Pariveda.BI.DeploymentWizard
             {
                 SSISItems.Add(new SSISItem(item.FullName,true));
             }
-        }
-
-        private void nextButton_Click(object sender, EventArgs e)
-        {
-            //deploy to the destination
-        }
-
-        private void sqlDataGridCommit_CurrentChanged(object sender, EventArgs e)
-        {
-
-        }
-
-   
+        }   
     }
 }
