@@ -121,6 +121,10 @@
       <Project>{F2025C08-19A6-4E36-B64A-9AE29CB4B4A4}</Project>
       <Name>Pariveda.BI.Deployment.Library</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pariveda.BI.Deployment.Library.Extensions\Pariveda.BI.Deployment.Library.Extensions.csproj">
+      <Project>{19355ED0-FB26-46AE-84C9-BC68845DB5E4}</Project>
+      <Name>Pariveda.BI.Deployment.Library.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BIDeploymentDatabase.sdf">

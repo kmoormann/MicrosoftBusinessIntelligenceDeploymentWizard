@@ -3,9 +3,12 @@
 // Note that script files will not be part of the project build.
 
 #load "BISolutionParser.fs"
+#load "SSISProjectFileParser.fs"
 open Pariveda.BI.Deployment.Library
 
-    
+let testSln = @"C:\ParivedaDW_Projects\ParivedaAWDW\ParivedaAWDW\ParivedaAWDW.dtproj";
+
+let sqlTest = SSISProjectFileParser.GetSQLScripts(testSln)
 
 //let ParseProjectFile fileName =
 //    let file = new FileInfo(fileName)

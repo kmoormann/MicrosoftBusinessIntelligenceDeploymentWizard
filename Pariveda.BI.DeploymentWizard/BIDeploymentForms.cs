@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Pariveda.BI.Deployment;
 using System.IO;
 using Pariveda.BI.Deployment.Library;
+using Pariveda.BI.Deployment.Library.Extensions;
 
 namespace Pariveda.BI.DeploymentWizard
 {
@@ -80,26 +81,26 @@ namespace Pariveda.BI.DeploymentWizard
 
         private void InitializeBILists(string slnFile)
         {
-            var info = new FileInfo(slnFile).Directory;
-            InitializeSSISList(info);
-            InitializeSQLLists(info);
+            var biFiles = new FileInfo(slnFile).ParseBISolutionFile();
+            InitializeSSISList(biFiles);
+            InitializeSQLLists(biFiles);
         }
 
-        private void InitializeSQLLists(DirectoryInfo info)
+        private void InitializeSQLLists(IEnumerable<FileInfo> biFiles)
         {
             SQLCommitItems.Clear();
-            foreach (var item in CreateBIItemsListingFromDirectory(info, ".sql"))
+            foreach (var item in biFiles.Where(f => f.Extension.Equals(".sql")))
             {
-                SQLCommitItems.Add((SQLItem)item);
+                SQLCommitItems.Add(new SQLItem(item.FullName, true));
             }
         }
 
-        private void InitializeSSISList(DirectoryInfo root)
+        private void InitializeSSISList(IEnumerable<FileInfo> biFiles)
         {
             SSISItems.Clear();
-            foreach (var item in CreateBIItemsListingFromDirectory(root, ".dtsx"))
+            foreach (var item in biFiles)
             {
-                SSISItems.Add((SSISItem)item);
+                SSISItems.Add(new SSISItem(item.FullName,true));
             }
         }
 

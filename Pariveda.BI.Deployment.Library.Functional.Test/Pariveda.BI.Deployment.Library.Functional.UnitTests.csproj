@@ -55,6 +55,10 @@
       <Project>{32641446-4D74-450C-AFD2-751AA6FBB07A}</Project>
       <Name>Pariveda.BI.Deployment.Library.Functional</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pariveda.BI.Deployment.Library.Extensions\Pariveda.BI.Deployment.Library.Extensions.csproj">
+      <Project>{19355ED0-FB26-46AE-84C9-BC68845DB5E4}</Project>
+      <Name>Pariveda.BI.Deployment.Library.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

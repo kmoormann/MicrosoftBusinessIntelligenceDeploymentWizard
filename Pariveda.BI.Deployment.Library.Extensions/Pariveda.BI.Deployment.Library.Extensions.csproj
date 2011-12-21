@@ -43,6 +43,12 @@
     <Compile Include="DeploymentExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pariveda.BI.Deployment.Functional\Pariveda.BI.Deployment.Library.Functional.fsproj">
+      <Project>{32641446-4D74-450C-AFD2-751AA6FBB07A}</Project>
+      <Name>Pariveda.BI.Deployment.Library.Functional</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Pariveda.BI.Deployment.Library.Extensions;
 
 namespace Pariveda.BI.Deployment.Library.Functional.Test
 {
@@ -16,33 +17,14 @@ namespace Pariveda.BI.Deployment.Library.Functional.Test
         public void GetAllSSISProjectXMLFromSolutionFile()
         {
             //Arrange
-            var slnFile = new FileInfo(@"C:\ParivedaDW_Projects\ParivedaAWDW\ParivedaAWDW.sln");
+            var biFiles = (new FileInfo(@"C:\ParivedaDW_Projects\ParivedaAWDW\ParivedaAWDW.sln")).ParseBISolutionFile();
+            var biExtensions = new List<string>{".dtsx", ".sql", ".rdl"};
             //Act
-            var projectFiles = SolutionParser.GetProjectXmlDocs(slnFile.FullName, ".dtproj");
+            int count = biFiles.Count();
+            int biFileCount = biFiles.Where(f => biExtensions.Contains(f.Extension)).Count();
 
             //Assert
-            foreach (var item in projectFiles)
-            {
-
-            }
-            Assert.IsTrue(false);
-        }
-
-        [TestMethod]
-        public void GetRelativePath()
-        {
-            //Arrange
-            var slnFile = new FileInfo(@"C:\ParivedaDW_Projects\ParivedaAWDW\ParivedaAWDW.sln");
-            var baseDirectory = slnFile.Directory;
-            var relativePathDown = @"\Configurations\Common Connections.dtsConfig";
-            //var relativePathUp = @"..\ParivedaAWCUBE\ParivedaAWCUBE\SSASUserLoginName.sql";
-
-            //Act
-            var fileDown = SolutionParser.GetXmlDoc(baseDirectory,relativePathDown);
-            
-            //Assert
-            
-            Console.WriteLine(fileDown.InnerXml);
+            Assert.AreEqual(count, biFileCount);// AreSame(count, biFileCount);
         }
 
         private string GetQuoted(string stringToParse)
@@ -50,6 +32,7 @@ namespace Pariveda.BI.Deployment.Library.Functional.Test
             string pattern = @"([""'])(?:(?=(\\?))\2.)*?\1";
             return (new Regex(pattern)).Match(stringToParse).Value.Replace("\"", String.Empty);
         }
+
         [TestMethod]
         public void parsedatabaseProject()
         {
@@ -74,8 +57,8 @@ namespace Pariveda.BI.Deployment.Library.Functional.Test
         [TestMethod]
         public void parseSSISProject()
         {
-            foreach (var item in SSISProjectFileParser.ParseSSISProjectFile(@"C:\DeploymentsTemp\ProjectFiles\ssis.dtproj"))
-                Assert.IsFalse(item.Exists);
+            //foreach (var item in SSISProjectFileParser.ParseSSISProjectFile(@"C:\DeploymentsTemp\ProjectFiles\ssis.dtproj"))
+                //Assert.IsFalse(item.Exists);
 
         }
 

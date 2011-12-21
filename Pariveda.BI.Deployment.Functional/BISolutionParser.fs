@@ -10,7 +10,7 @@ open System.Xml
 
     module SolutionParser =
 
-        let ParseSolutionFile a extension = 
+        let private ParseSolutionFile a extension = 
             let parsed = System.IO.File.ReadLines(a)
                          |> Seq.filter (fun l -> l.StartsWith("Project"))
                          |> Seq.map (fun l -> l.Split(',')|>Array.toList)
@@ -20,20 +20,11 @@ open System.Xml
                          |> Seq.map (fun l -> l.Trim())
             parsed
 
-        let GetXmlDoc (basis: System.IO.DirectoryInfo, relativePath: string) =
-          let path = basis.FullName + (if relativePath.StartsWith("\\") then relativePath else "\\" + relativePath)
-          let doc = new XmlDocument()
-          do doc.Load(path)
-          doc
-
-        let GetProjectXmlDocs a extension =
+        let GetProjectXmlDocPaths a extension =
             let baseDirectory = (new FileInfo(a)).Directory
             seq {for x in (ParseSolutionFile a extension) do
                      let path = String.Concat(baseDirectory.FullName,(if x.StartsWith("\\") then x else "\\" + x))
-                     let doc = new XmlDocument()
-                     do doc.Load(path)
-                     yield doc
-                     //yield path
+                     yield path
                 }
                              
             
